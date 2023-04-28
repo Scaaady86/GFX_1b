@@ -84,19 +84,19 @@ window.onload = async () => {
     });
 
     /* --------- Load some data from external files - only works with an http server --------- */
-    //await loadSomething();
+    await loadSomething();  
 
     /* --------- start render loop --------- */
     requestAnimationFrame(render);
 }
 
 /* --------- simple example of loading external files --------- */
-/*async function loadSomething() {
+async function loadSomething() {
     const data = await fetch('shapes/bunny.obj').then(result => result.text());
     let [parsedVertices, colors] = objectParser(data);
     shapes[1] = createLoadedShape(parsedVertices, colors);
     shapes[1].translateLocally([-1.5, 0.5, -1]);
-}*/
+}
 
 let then = 0;
 

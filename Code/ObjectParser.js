@@ -1,50 +1,67 @@
 //object parser for loading any kind of .obj
 function objectParser(data){
     let vertices = [];
-    let indices = [];
+    let vertexIndices = [];
+    let normals = [];
+    let normalIndices = [];
     let colors = [];
 
+    //Split the data into rows
     const rows = data.split("\n");
     let chunks = [];
 
+    //Put the values of the rows in an array
     for(let row of rows){
         chunks.push(row.split(' '));
     }
-    console.log("chunks");
-    console.log(chunks);
+
+    //Extract the vertices, normals and split the f lines
+    let fSplit = [];
     for(let chunk of chunks){
         const type = chunk[0];
 
         if(type === 'v')
         vertices.push(chunk);
-        for (let value = 1; value < chunk.length; ++value){
-            switch (type){
-                case 'f':
-                    console.log(chunk[value]);
-                    indices.push(parseInt(chunk[value])-1);
-                    break;
+
+        if(type === 'vn')
+        normals.push(chunk);
+
+        if(type === 'f'){
+            for (let value = 1; value < chunk.length; ++value){
+                fSplit.push(chunk[value].split('//'));
             }
         }
     }
 
-    console.log("vertices");
-    console.log(vertices);
-    console.log("indices");
-    console.log(indices);
-    let parsedVertices = [];
+    // extract the Indices
+    for(let value = 0; value < fSplit.length; ++value){
+        vertexIndices.push(parseFloat(fSplit[value][0])-1);
+        normalIndices.push(parseFloat(fSplit[value][1])-1);
+    }
 
-    for(let index of indices){
+    //finalise the vertices and normals
+    let parsedVertices = [];
+    let parsedNormals = [];
+    console.log(normals);
+    console.log(normalIndices);
+    for(let index of vertexIndices){
         parsedVertices.push(parseFloat(vertices[index][1]));
         parsedVertices.push(parseFloat(vertices[index][2]));
         parsedVertices.push(parseFloat(vertices[index][3]));
         parsedVertices.push(1);
-    
     }
+    for(let index of normalIndices){
+        parsedNormals.push(parseFloat(normals[index][1]));
+        parsedNormals.push(parseFloat(normals[index][2]));
+        parsedNormals.push(parseFloat(normals[index][3]));
+        parsedNormals.push(1);
+    }
+    
 
-    for (let i of indices){
+    console.log(parsedNormals);
+    for (let i of vertexIndices){
         colors.push(0, 0, 0, 1);
     }
 
-    console.log(parsedVertices);
     return [parsedVertices, colors];
 }
