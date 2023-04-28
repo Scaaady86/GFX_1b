@@ -84,20 +84,19 @@ window.onload = async () => {
     });
 
     /* --------- Load some data from external files - only works with an http server --------- */
-    await loadSomething();
+    //await loadSomething();
 
     /* --------- start render loop --------- */
     requestAnimationFrame(render);
 }
 
 /* --------- simple example of loading external files --------- */
-async function loadSomething() {
+/*async function loadSomething() {
     const data = await fetch('shapes/bunny.obj').then(result => result.text());
-    //console.log(data);
     let [parsedVertices, colors] = objectParser(data);
     shapes[1] = createLoadedShape(parsedVertices, colors);
     shapes[1].translateLocally([-1.5, 0.5, -1]);
-}
+}*/
 
 let then = 0;
 
@@ -120,57 +119,8 @@ function render(now) {
     requestAnimationFrame(render)
 }
 
-//object parser for loading any kind of .obj
-function objectParser(data){
-    let vertices = [];
-    let indices = [];
-    let colors = [];
 
-    const rows = data.split("\n");
-    let chunks = [];
 
-    for(let row of rows){
-        chunks.push(row.split(' '));
-    }
-
-    console.log(chunks);
-    for(let chunk of chunks){
-        const type = chunk[0];
-
-        for (let value = 1; value < chunk.length; ++value){
-            switch (type){
-                case 'v':
-                    vertices.push(parseFloat(chunk[value]));
-                    break;
-                case 'f':
-                    indices.push(parseInt(chunk[value]) -1);
-                    break;
-            }
-        }
-    }
-
-    console.log(vertices);
-    console.log(indices);
-    let parsedVertices = [];
-    var count = 0;
-    for(let index of indices){
-        count++;
-        parsedVertices.push(vertices[index]);
-        if(count === 3){
-            parsedVertices.push(1)
-            count = 0;
-        }
-    
-    }
-
-    for (let v of vertices){
-        colors.push(1.0, 0.0, 0.0, 1);
-    }
-
-    console.log(parsedVertices);
-    return [parsedVertices, colors];
-
-}
 
 
 
