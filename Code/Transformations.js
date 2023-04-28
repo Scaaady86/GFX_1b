@@ -37,27 +37,27 @@ function MoveShapeLocally(key){
                 switch(key){
                     case 'ArrowUp':
                         shapes[i].translateLocally([0,0.1,0]);
-                        shapes[i+9].translateLocally([0,0.1,0]);
+                        objectCoordSystems[i].translateLocally([0,0.1,0]);
                         break;
                     case 'ArrowDown':
                         shapes[i].translateLocally([0,-0.1,0]);
-                        shapes[i+9].translateLocally([0,-0.1,0]);
+                        objectCoordSystems[i].translateLocally([0,-0.1,0]);
                         break;
                     case 'ArrowRight':
                         shapes[i].translateLocally([0.1,0,0]);
-                        shapes[i+9].translateLocally([0.1,0,0]);
+                        objectCoordSystems[i].translateLocally([0.1,0,0]);
                         break;
                     case 'ArrowLeft':
                         shapes[i].translateLocally([-0.1,0,0]);
-                        shapes[i+9].translateLocally([-0.1,0,0]);
+                        objectCoordSystems[i].translateLocally([-0.1,0,0]);
                         break;
                     case ',':
                         shapes[i].translateLocally([0,0,-0.1]);
-                        shapes[i+9].translateLocally([0,0,-0.1]);
+                        objectCoordSystems[i].translateLocally([0,0,-0.1]);
                         break;
                     case '.':
                         shapes[i].translateLocally([0,0,0.1]);
-                        shapes[i+9].translateLocally([0,0,0.1]);
+                        objectCoordSystems[i].translateLocally([0,0,0.1]);
                         break;
                 }
             }
@@ -71,27 +71,27 @@ function MoveShapeGlobally(key){
             switch(key){
                 case 'ArrowUp':
                     shapes[i].translateGlobally([0,0.1,0]);
-                    shapes[i+9].translateGlobally([0,0.1,0]);
+                    objectCoordSystems[i].translateGlobally([0,0.1,0]);
                     break;
                 case 'ArrowDown':
                     shapes[i].translateGlobally([0,-0.1,0]);
-                    shapes[i+9].translateGlobally([0,-0.1,0]);
+                    objectCoordSystems[i].translateGlobally([0,-0.1,0]);
                     break;
                 case 'ArrowRight':
                     shapes[i].translateGlobally([0.1,0,0]);
-                    shapes[i+9].translateGlobally([0.1,0,0]);
+                    objectCoordSystems[i].translateGlobally([0.1,0,0]);
                     break;
                 case 'ArrowLeft':
                     shapes[i].translateGlobally([-0.1,0,0]);
-                    shapes[i+9].translateGlobally([-0.1,0,0]);
+                    objectCoordSystems[i].translateGlobally([-0.1,0,0]);
                     break;
                 case ',':
                     shapes[i].translateGlobally([0,0,-0.1]);
-                    shapes[i+9].translateGlobally([0,0,-0.1]);
+                    objectCoordSystems[i].translateGlobally([0,0,-0.1]);
                     break;
                 case '.':
                     shapes[i].translateGlobally([0,0,0.1]);
-                    shapes[i+9].translateGlobally([0,0,0.1]);
+                    objectCoordSystems[i].translateGlobally([0,0,0.1]);
                     break;
             }
         }
@@ -104,27 +104,27 @@ function rotateAllShapes(key){
             switch(key){
                 case 'i':
                     shapes[i].rotateGlobally(0.1, [-1,0,0]);
-                    shapes[i+9].rotateGlobally(0.1, [-1,0,0]);
+                    objectCoordSystems[i].rotateGlobally(0.1, [-1,0,0]);
                     break;
                 case 'k':
                     shapes[i].rotateGlobally(0.1, [1,0,0]);
-                    shapes[i+9].rotateGlobally(0.1, [1,0,0]);
+                    objectCoordSystems[i].rotateGlobally(0.1, [1,0,0]);
                     break;
                 case 'o':
                     shapes[i].rotateGlobally(0.1, [0,-1,0]);
-                    shapes[i+9].rotateGlobally(0.1, [0,-1,0]);
+                    objectCoordSystems[i].rotateGlobally(0.1, [0,-1,0]);
                     break;
                 case 'u':
                     shapes[i].rotateGlobally(0.1, [0,1,0]);
-                    shapes[i+9].rotateGlobally(0.1, [0,1,0]);
+                    objectCoordSystems[i].rotateGlobally(0.1, [0,1,0]);
                     break;
                 case 'l':
                     shapes[i].rotateGlobally(0.1, [0,0,-1]);
-                    shapes[i+9].rotateGlobally(0.1, [0,0,-1]);
+                    objectCoordSystems[i].rotateGlobally(0.1, [0,0,-1]);
                     break;
                 case 'j':
                     shapes[i].rotateGlobally(0.1, [0,0,1]);
-                    shapes[i+9].rotateGlobally(0.1, [0,0,1]);
+                    objectCoordSystems[i].rotateGlobally(0.1, [0,0,1]);
                     break;
             }
         }
@@ -140,27 +140,27 @@ function rotateShape(key){
                 switch(key){
                     case 'i':
                         shapes[i].rotateLocally(0.1, [-1,0,0]);
-                        shapes[i+9].rotateLocally(0.1, [-1,0,0]);
+                        objectCoordSystems[i].rotateLocally(0.1, [-1,0,0]);
                         break;
                     case 'k':
                         shapes[i].rotateLocally(0.1, [1,0,0]);
-                        shapes[i+9].rotateLocally(0.1, [1,0,0]);
+                        objectCoordSystems[i].rotateLocally(0.1, [1,0,0]);
                         break;
                     case 'o':
                         shapes[i].rotateLocally(0.1, [0,-1,0]);
-                        shapes[i+9].rotateLocally(0.1, [0,-1,0]);
+                        objectCoordSystems[i].rotateLocally(0.1, [0,-1,0]);
                         break;
                     case 'u':
                         shapes[i].rotateLocally(0.1, [0,1,0]);
-                        shapes[i+9].rotateLocally(0.1, [0,1,0]);
+                        objectCoordSystems[i].rotateLocally(0.1, [0,1,0]);
                         break;
                     case 'l':
                         shapes[i].rotateLocally(0.1, [0,0,-1]);
-                        shapes[i+9].rotateLocally(0.1, [0,0,-1]);
+                        objectCoordSystems[i].rotateLocally(0.1, [0,0,-1]);
                         break;
                     case 'j':
                         shapes[i].rotateLocally(0.1, [0,0,1]);
-                        shapes[i+9].rotateLocally(0.1, [0,0,1]);
+                        objectCoordSystems[i].rotateLocally(0.1, [0,0,1]);
                         break;
                 }
             }
@@ -177,27 +177,27 @@ function scaleShape(key){
                 switch(key){
                     case 'a':
                         shapes[i].scaleLocally([0.9,1,1]);
-                        shapes[i+9].scaleLocally([0.9,1,1]);
+                        objectCoordSystems[i].scaleLocally([0.9,1,1]);
                         break;
                     case 'A':
                         shapes[i].scaleLocally([1.1,1,1]);
-                        shapes[i+9].scaleLocally([1.1,1,1]);
+                        objectCoordSystems[i].scaleLocally([1.1,1,1]);
                         break;
                     case 'b':
                         shapes[i].scaleLocally([1,0.9,1]);
-                        shapes[i+9].scaleLocally([1,0.9,1]);
+                        objectCoordSystems[i].scaleLocally([1,0.9,1]);
                         break;
                     case 'B':
                         shapes[i].scaleLocally([1,1.1,1]);
-                        shapes[i+9].scaleLocally([1,1.1,1]);
+                        objectCoordSystems[i].scaleLocally([1,1.1,1]);
                         break;
                     case 'c':
                         shapes[i].scaleLocally([1,1,0.9]);
-                        shapes[i+9].scaleLocally([1,1,0.9]);
+                        objectCoordSystems[i].scaleLocally([1,1,0.9]);
                         break;
                     case 'C':
                         shapes[i].scaleLocally([1,1,1.1]);
-                        shapes[i+9].scaleLocally([1,1,1.1]);
+                        objectCoordSystems[i].scaleLocally([1,1,1.1]);
                         break;
                 }
             }
@@ -211,27 +211,27 @@ function scaleAllShapes(key){
             switch(key){
                 case 'a':
                     shapes[i].scaleGlobally([0.9,1,1]);
-                    shapes[i+9].scaleGlobally([0.9,1,1]);
+                    objectCoordSystems[i].scaleGlobally([0.9,1,1]);
                     break;
                 case 'A':
                     shapes[i].scaleGlobally([1.1,1,1]);
-                    shapes[i+9].scaleGlobally([1.1,1,1]);
+                    objectCoordSystems[i].scaleGlobally([1.1,1,1]);
                     break;
                 case 'b':
                     shapes[i].scaleGlobally([1,0.9,1]);
-                    shapes[i+9].scaleGlobally([1,0.9,1]);
+                    objectCoordSystems[i].scaleGlobally([1,0.9,1]);
                     break;
                 case 'B':
                     shapes[i].scaleGlobally([1,1.1,1]);
-                    shapes[i+9].scaleGlobally([1,1.1,1]);
+                    objectCoordSystems[i].scaleGlobally([1,1.1,1]);
                     break;
                 case 'c':
                     shapes[i].scaleGlobally([1,1,0.9]);
-                    shapes[i+9].scaleGlobally([1,1,0.9]);
+                    objectCoordSystems[i].scaleGlobally([1,1,0.9]);
                     break;
                 case 'C':
                     shapes[i].scaleGlobally([1,1,1.1]);
-                    shapes[i+9].scaleGlobally([1,1,1.1]);
+                    objectCoordSystems[i].scaleGlobally([1,1,1.1]);
                     break;
             }
         }

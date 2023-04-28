@@ -4,6 +4,7 @@ const { mat4 } = glMatrix;
 const toRad = glMatrix.glMatrix.toRadian;
 
 const shapes = [];
+const objectCoordSystems = [];
 let gl = null;
 
 const locations = {
@@ -50,34 +51,26 @@ window.onload = async () => {
 
     /* --------- create 9 shapes and corresponding OCS and translate them away from each other --------- */
     shapes.push(createWCS());
+    objectCoordSystems.push(createWCS());
 
     var offset = -1.5;
     for(i = 1; i<5; i++){
         shapes.push(createPyramid());
+        objectCoordSystems.push(createOCS());
         shapes[i].translateLocally([offset, 0.5, -1]);
+        objectCoordSystems[i].translateLocally([offset, 0.5, -1]);
         offset += 1;
     }
 
     offset = -1.5;
     for(i = 5; i<10; i++){
         shapes.push(createCube());
+        objectCoordSystems.push(createOCS());
         shapes[i].translateLocally([offset, -0.5, -1]);
+        objectCoordSystems[i].translateLocally([offset, -0.5, -1]);
         offset += 0.75;
     }
 
-    offset = -1.5;
-    for(i = 10; i<14; i++){
-        shapes.push(createOCS());
-        shapes[i].translateLocally([offset, 0.5, -1]);
-        offset += 1;
-    }
-
-    offset = -1.5;
-    for(i = 14; i<19; i++){
-        shapes.push(createOCS());
-        shapes[i].translateLocally([offset, -0.5, -1]);
-        offset += 0.75;
-    }
     /* --------- Attach event listener for events to the window --------- */
     window.addEventListener('keydown', function(action) {
         console.log(action);
@@ -91,20 +84,20 @@ window.onload = async () => {
     });
 
     /* --------- Load some data from external files - only works with an http server --------- */
-    //await loadSomething();
+    await loadSomething();
 
     /* --------- start render loop --------- */
     requestAnimationFrame(render);
 }
 
 /* --------- simple example of loading external files --------- */
-/*async function loadSomething() {
+async function loadSomething() {
     const data = await fetch('shapes/bunny.obj').then(result => result.text());
     //console.log(data);
     let [parsedVertices, colors] = objectParser(data);
     shapes[1] = createLoadedShape(parsedVertices, colors);
     shapes[1].translateLocally([-1.5, 0.5, -1]);
-}*/
+}
 
 let then = 0;
 

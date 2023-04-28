@@ -200,7 +200,7 @@ function createOCS(){
 }
 
 function DisplayOCS(i){
-    if(shapes[i].selected) shapes[i+9].drawLines();
+    if(shapes[i].selected) objectCoordSystems[i].drawLines();
 }
 
 function createLoadedShape(vertices, colors){
