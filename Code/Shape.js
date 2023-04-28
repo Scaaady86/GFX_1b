@@ -50,20 +50,20 @@ class Shape {
 
     draw() {
         /* --------- set up attribute arrays --------- */
-        Shape.setupAttribute(this.buffers.vertexBuffer, locations.attributes.vertexLocation);
-        Shape.setupAttribute(this.buffers.colorBuffer, locations.attributes.colorLocation);
-        Shape.setupAttribute(this.buffers.normalBuffer, locations.attributes.normalLocation, true);
+        Shape.setupAttribute(this.buffers.vertexBuffer, currentShaderProgram.attributes.vertexLocation);
+        Shape.setupAttribute(this.buffers.colorBuffer, currentShaderProgram.attributes.colorLocation);
+        Shape.setupAttribute(this.buffers.normalBuffer, currentShaderProgram.attributes.normalLocation, true);
 
         /* --------- combine view and model matrix into modelView matrix --------- */
         const modelViewMatrix = mat4.create();
-        mat4.mul(modelViewMatrix, viewMatrix, this.transformationMatrix);
+        mat4.mul(modelViewMatrix, matrices.viewMatrix, this.transformationMatrix);
 
-
+        // construct normal matrix as inverse transpose of modelView matrix
         mat3.normalFromMat4(this.normalMatrix, modelViewMatrix);
-        
+
         /* --------- send modelView matrix to GPU --------- */
-        gl.uniformMatrix4fv(locations.uniforms.modelViewMatrix, gl.FALSE, modelViewMatrix);
-        gl.uniformMatrix3fv(locations.uniforms.normalMatrix, gl.FALSE, this.normalMatrix);
+        gl.uniformMatrix4fv(currentShaderProgram.uniforms.modelViewMatrix, gl.FALSE, modelViewMatrix);
+        gl.uniformMatrix3fv(currentShaderProgram.uniforms.normalMatrix, gl.FALSE, this.normalMatrix);
 
         /* --------- draw the shape --------- */
         gl.drawArrays(gl.TRIANGLES, 0, this.vertices.length / 4);
@@ -71,15 +71,15 @@ class Shape {
 
     drawLines() {
         /* --------- set up attribute arrays --------- */
-        Shape.setupAttribute(this.buffers.vertexBuffer, locations.attributes.vertexLocation);
-        Shape.setupAttribute(this.buffers.colorBuffer, locations.attributes.colorLocation);
+        Shape.setupAttribute(this.buffers.vertexBuffer, currentShaderProgram.attributes.vertexLocation);
+        Shape.setupAttribute(this.buffers.colorBuffer, currentShaderProgram.attributes.colorLocation);
 
         /* --------- combine view and model matrix into modelView matrix --------- */
         const modelViewMatrix = mat4.create();
-        mat4.mul(modelViewMatrix, viewMatrix, this.transformationMatrix);
+        mat4.mul(modelViewMatrix, matrices.viewMatrix, this.transformationMatrix);
 
         /* --------- send modelView matrix to GPU --------- */
-        gl.uniformMatrix4fv(locations.uniforms.modelViewMatrix, gl.FALSE, modelViewMatrix);
+        gl.uniformMatrix4fv(currentShaderProgram.uniforms.modelViewMatrix, gl.FALSE, modelViewMatrix);
 
         /* --------- draw the shape --------- */
         gl.drawArrays(gl.LINES, 0, this.vertices.length / 4);

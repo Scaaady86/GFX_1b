@@ -2,6 +2,7 @@ const { mat4, mat3 } = glMatrix;
 const toRad = glMatrix.glMatrix.toRadian;
 
 const shapes = [];
+const objectCoordSystems = [];
 let gl = null;
 
 const shaders = {
@@ -34,3 +35,6 @@ const matrices = {
     viewMatrix: mat4.create(),
     projectionMatrix: mat4.create(),
 }
+
+var cameraSelected = true; //variable used to keep track of User selection
+var selectedAll = false; //variable used to keep track of User selection

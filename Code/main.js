@@ -1,36 +1,3 @@
-
-
-const { mat4, mat3} = glMatrix;
-const toRad = glMatrix.glMatrix.toRadian;
-
-const shapes = [];
-const objectCoordSystems = [];
-let gl = null;
-
-const shaders = {
-    default: "v-shader-default",
-    gouraudDiffuse: "v-shader-gouraud-diffuse",
-    fragment: "f-shader"
-}
-
-const locations = {
-    attributes: {
-        vertexLocation: null,
-        colorLocation: null,
-        normalLocation: null
-    }, uniforms: {
-        modelViewMatrix: null,
-        viewMatrix: null,
-        projectionMatrix: null,
-        normalMatrix: null
-    }
-}
-
-const viewMatrix = mat4.create();
-
-var cameraSelected = true; //variable used to keep track of User selection
-var selectedAll = false; //variable used to keep track of User selection
-
 window.onload = async () => {
 
     /* --------- basic setup --------- */
@@ -41,29 +8,20 @@ window.onload = async () => {
     gl.viewport(0, 0, canvas.clientWidth, canvas.clientHeight);
     gl.clearColor(0.729, 0.764, 0.674   , 1);
 
-    const program = createShaderProgram("v-shader-gouraud-diffuse", "f-shader");
-    gl.useProgram(program);
-    
-
-    /* --------- save attribute & uniform locations --------- */
-    locations.attributes.vertexLocation = gl.getAttribLocation(program, "vertexPosition");
-    locations.attributes.colorLocation = gl.getAttribLocation(program, "vertexColor");
-    locations.attributes.normalLocation = gl.getAttribLocation(program, "vertexNormal");
-    locations.uniforms.modelViewMatrix = gl.getUniformLocation(program, "modelViewMatrix");
-    locations.uniforms.projectionMatrix = gl.getUniformLocation(program, "projectionMatrix");
-    locations.uniforms.viewMatrix = gl.getUniformLocation(program, "viewMatrix");
-    locations.uniforms.normalMatrix = gl.getUniformLocation(program, "normalMatrix");
-
-
     /* --------- create & send projection matrix --------- */
-    const projectionMatrix = mat4.create();
-    mat4.perspective(projectionMatrix, toRad(45), canvas.clientWidth / canvas.clientHeight, 0.1, 100);
-    gl.uniformMatrix4fv(locations.uniforms.projectionMatrix, gl.FALSE, projectionMatrix);
+    mat4.perspective(matrices.projectionMatrix, toRad(45), canvas.clientWidth / canvas.clientHeight, 0.1, 100);
 
     /* --------- create view matrix --------- */
-    mat4.lookAt(viewMatrix, [0, 0, 3], [0, 0, 0], [0, 1, 0]);
+    mat4.lookAt(matrices.viewMatrix, [0, 0, 3], [0, 0, 0], [0, 1, 0]);
 
-    gl.uniformMatrix4fv(locations.uniforms.viewMatrix, gl.FALSE, viewMatrix);
+    shaderPrograms.defaultProgram = new ShaderProgram(shaders.default, shaders.fragment, shaderInfo);
+    shaderPrograms.gouraudDiffuseProgram = new ShaderProgram(shaders.gouraudDiffuse, shaders.fragment, shaderInfo);
+    shaderPrograms.gouraudSpecularProgram = new ShaderProgram(shaders.gouraudDiffuse, shaders.fragment, shaderInfo);
+    shaderPrograms.phongDiffuseProgram = new ShaderProgram(shaders.gouraudDiffuse, shaders.fragment, shaderInfo);
+    shaderPrograms.phongSpecularProgram = new ShaderProgram(shaders.gouraudDiffuse, shaders.fragment, shaderInfo);
+
+    shaderPrograms.defaultProgram.enable();
+
 
     /* --------- create 9 shapes and corresponding OCS and translate them away from each other --------- */
     shapes.push(createWCS());
@@ -87,8 +45,6 @@ window.onload = async () => {
         offset += 0.75;
     }
 
-    shapes.push()
-
     /* --------- Attach event listener for events to the window --------- */
     window.addEventListener('keydown', function(action) {
         checkKey(action.key);
@@ -107,7 +63,7 @@ window.onload = async () => {
     requestAnimationFrame(render);
 }
 
-/* --------- simple example of loading external files --------- */
+/* --------- Loading the Shapes --------- */
 async function loadSomething() {
     const data = await fetch('shapes/bunny.obj').then(result => result.text());
     let bunny = [];
@@ -139,7 +95,7 @@ function render(now) {
 
     
     shapes[0].drawLines();
-    for(i = 1; i<10; i++){
+    for(i = 1; i<shapes.length; i++){
 
         shapes[i].draw();
         DisplayOCS(i);

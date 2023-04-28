@@ -13,6 +13,8 @@
     <script type="text/javascript" src="CreateShape.js"></script>
     <script type="text/javascript" src="UserInteraction.js"></script>
     <script type="text/javascript" src="ObjectParser.js"></script>
+    <script type="text/javascript" src="ShaderProgram.js"></script>
+    <script type="text/javascript" src="globals.js"></script>
     <link rel="stylesheet" href="canvas.css">
 
     <script id="v-shader-default" type="x-shader/x-vertex">
@@ -53,10 +55,11 @@
 
             vec3 lightVector = normalize(lightPosition.xyz - viewPosition.xyz);
             vec3 transformedNormal = normalize(normalMatrix * vertexNormal);
+
             vec4 ambientLight = vertexColor * vec4(0.8, 0.8, 0.8, 1);
             float lightIntensity = max(0.0, dot(lightVector, transformedNormal));
 
-            gl_Position = projectionMatrix * viewPosition; 
+            gl_Position = projectionMatrix * viewPosition;
             fragmentColor = ambientLight * lightIntensity;
             fragmentColor.a = 1.0; 
         }

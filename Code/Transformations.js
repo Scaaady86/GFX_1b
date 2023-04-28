@@ -3,16 +3,16 @@
 function MoveCameraWithArrows(key){
     switch(key){
         case 'ArrowUp':
-            mat4.translate(viewMatrix, viewMatrix, [0,-0.1,0]);
+            mat4.translate(matrices.viewMatrix, matrices.viewMatrix, [0,-0.1,0]);
             break;
         case 'ArrowDown':
-            mat4.translate(viewMatrix, viewMatrix, [0,0.1,0]);
+            mat4.translate(matrices.viewMatrix, matrices.viewMatrix, [0,0.1,0]);
             break;
         case 'ArrowRight':
-            mat4.translate(viewMatrix, viewMatrix, [-0.1,0,0]);
+            mat4.translate(matrices.viewMatrix, matrices.viewMatrix, [-0.1,0,0]);
             break;
         case 'ArrowLeft':
-            mat4.translate(viewMatrix, viewMatrix, [0.1,0,0]);
+            mat4.translate(matrices.viewMatrix, matrices.viewMatrix, [0.1,0,0]);
             break;
 
     }   
@@ -20,7 +20,7 @@ function MoveCameraWithArrows(key){
 
 function MoveCameraWithMouse(x, y, mousedown){
     window.addEventListener("mousemove", (action) =>{
-        if(mousedown) mat4.translate(viewMatrix, viewMatrix, [(x-action.offsetX)*0.0001, (y-action.offsetY)*-0.0001, 0]);
+        if(mousedown) mat4.translate(matrices.viewMatrix, matrices.viewMatrix, [(x-action.offsetX)*0.0001, (y-action.offsetY)*-0.0001, 0]);
     });
 
     window.addEventListener("mouseup", (action) =>{

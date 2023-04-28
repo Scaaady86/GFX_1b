@@ -93,5 +93,25 @@ function checkKey(key){
         case 'C':
             scaleShape(key);
             break;
+        case 'd':
+            shaderPrograms.defaultProgram.enable();
+            console.log("Default Shader enabled");
+            break;
+        case 'w':
+            shaderPrograms.gouraudDiffuseProgram.enable();
+            console.log("Gouraud Diffuse Shader enabled");
+            break;
+        case 'e':
+            shaderPrograms.gouraudSpecularProgram.enable();
+            console.log("Gouraud Specular Shader enabled");
+            break;
+        case 'r':
+            shaderPrograms.phongDiffuseProgram.enable();
+            console.log("Phong Diffuse Shader enabled");
+            break;
+        case 't':
+            shaderPrograms.phongSpecularProgram.enable();
+            console.log("Phong Specular Shader enabled");
+            break;
     }
 }
