@@ -2,19 +2,40 @@ class Shape {
     constructor() {
         this.vertices = [];
         this.colors = [];
-        
+        this.normals = [];
+
         var selected = false; //variable used to keep track of User selection
+
         this.buffers = {
             /* --------- initialize buffers --------- */
             vertexBuffer: gl.createBuffer(),
             colorBuffer: gl.createBuffer(),
+            normalBuffer: gl.createBuffer(),
         }
 
         /* --------- initialize transformation matrix --------- */
         this.transformationMatrix = mat4.create();
+        this.normalMatrix = mat3.create();
     }
 
-    initData(vertices, colors) {
+    initData(vertices, colors, normals) {
+        /* --------- flatten & convert data to 32 bit float arrays --------- */
+        this.vertices = new Float32Array(vertices.flat());
+        this.colors = new Float32Array(colors.flat());
+        this.normals = new Float32Array(normals.flat());
+
+        /* --------- send data to buffers --------- */
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.buffers.vertexBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, this.vertices, gl.STATIC_DRAW);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.buffers.colorBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, this.colors, gl.STATIC_DRAW);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.buffers.normalBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, this.normals, gl.STATIC_DRAW);
+    }
+
+    initDataCS(vertices, colors) {
         /* --------- flatten & convert data to 32 bit float arrays --------- */
         this.vertices = new Float32Array(vertices.flat());
         this.colors = new Float32Array(colors.flat());
@@ -31,13 +52,18 @@ class Shape {
         /* --------- set up attribute arrays --------- */
         Shape.setupAttribute(this.buffers.vertexBuffer, locations.attributes.vertexLocation);
         Shape.setupAttribute(this.buffers.colorBuffer, locations.attributes.colorLocation);
+        Shape.setupAttribute(this.buffers.normalBuffer, locations.attributes.normalLocation, true);
 
         /* --------- combine view and model matrix into modelView matrix --------- */
         const modelViewMatrix = mat4.create();
         mat4.mul(modelViewMatrix, viewMatrix, this.transformationMatrix);
 
+
+        mat3.normalFromMat4(this.normalMatrix, modelViewMatrix);
+        
         /* --------- send modelView matrix to GPU --------- */
         gl.uniformMatrix4fv(locations.uniforms.modelViewMatrix, gl.FALSE, modelViewMatrix);
+        gl.uniformMatrix3fv(locations.uniforms.normalMatrix, gl.FALSE, this.normalMatrix);
 
         /* --------- draw the shape --------- */
         gl.drawArrays(gl.TRIANGLES, 0, this.vertices.length / 4);
@@ -108,15 +134,17 @@ class Shape {
         mat4.mul(this.transformationMatrix, translationMatrix, this.transformationMatrix)
     }
 
-    static setupAttribute(buffer, location) {
+    static setupAttribute(buffer, location, isNormal = false) {
+        if (location === -1 || location === undefined) return;
+
         gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
 
         gl.vertexAttribPointer(
             location, // the attribute location
-            4, // number of elements for each attribute/vertex
+            isNormal? 3 : 4, // number of elements for each attribute/vertex
             gl.FLOAT, // type of the attributes
             gl.FALSE, // is data normalised?
-            4 * Float32Array.BYTES_PER_ELEMENT, // size for one vertex
+            (isNormal ? 3 : 4) * Float32Array.BYTES_PER_ELEMENT, // size for one vertex
             0 // offset from begin of vertex to the attribute
         );
 

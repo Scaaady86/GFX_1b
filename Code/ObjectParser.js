@@ -42,8 +42,7 @@ function objectParser(data){
     //finalise the vertices and normals
     let parsedVertices = [];
     let parsedNormals = [];
-    console.log(normals);
-    console.log(normalIndices);
+
     for(let index of vertexIndices){
         parsedVertices.push(parseFloat(vertices[index][1]));
         parsedVertices.push(parseFloat(vertices[index][2]));
@@ -54,14 +53,12 @@ function objectParser(data){
         parsedNormals.push(parseFloat(normals[index][1]));
         parsedNormals.push(parseFloat(normals[index][2]));
         parsedNormals.push(parseFloat(normals[index][3]));
-        parsedNormals.push(1);
     }
     
 
-    console.log(parsedNormals);
-    for (let i of vertexIndices){
-        colors.push(0, 0, 0, 1);
+    for (let i of parsedNormals){
+        colors.push(0.5, 0, 0, 1);
     }
 
-    return [parsedVertices, colors];
+    return [parsedVertices, colors, parsedNormals];
 }

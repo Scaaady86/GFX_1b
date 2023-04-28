@@ -1,19 +1,28 @@
 
 
-const { mat4 } = glMatrix;
+const { mat4, mat3} = glMatrix;
 const toRad = glMatrix.glMatrix.toRadian;
 
 const shapes = [];
 const objectCoordSystems = [];
 let gl = null;
 
+const shaders = {
+    default: "v-shader-default",
+    gouraudDiffuse: "v-shader-gouraud-diffuse",
+    fragment: "f-shader"
+}
+
 const locations = {
     attributes: {
         vertexLocation: null,
-        colorLocation: null
+        colorLocation: null,
+        normalLocation: null
     }, uniforms: {
         modelViewMatrix: null,
+        viewMatrix: null,
         projectionMatrix: null,
+        normalMatrix: null
     }
 }
 
@@ -32,14 +41,19 @@ window.onload = async () => {
     gl.viewport(0, 0, canvas.clientWidth, canvas.clientHeight);
     gl.clearColor(0.729, 0.764, 0.674   , 1);
 
-    const program = createShaderProgram("v-shader", "f-shader");
+    const program = createShaderProgram("v-shader-gouraud-diffuse", "f-shader");
     gl.useProgram(program);
+    
 
     /* --------- save attribute & uniform locations --------- */
     locations.attributes.vertexLocation = gl.getAttribLocation(program, "vertexPosition");
     locations.attributes.colorLocation = gl.getAttribLocation(program, "vertexColor");
+    locations.attributes.normalLocation = gl.getAttribLocation(program, "vertexNormal");
     locations.uniforms.modelViewMatrix = gl.getUniformLocation(program, "modelViewMatrix");
     locations.uniforms.projectionMatrix = gl.getUniformLocation(program, "projectionMatrix");
+    locations.uniforms.viewMatrix = gl.getUniformLocation(program, "viewMatrix");
+    locations.uniforms.normalMatrix = gl.getUniformLocation(program, "normalMatrix");
+
 
     /* --------- create & send projection matrix --------- */
     const projectionMatrix = mat4.create();
@@ -48,6 +62,8 @@ window.onload = async () => {
 
     /* --------- create view matrix --------- */
     mat4.lookAt(viewMatrix, [0, 0, 3], [0, 0, 0], [0, 1, 0]);
+
+    gl.uniformMatrix4fv(locations.uniforms.viewMatrix, gl.FALSE, viewMatrix);
 
     /* --------- create 9 shapes and corresponding OCS and translate them away from each other --------- */
     shapes.push(createWCS());
@@ -71,9 +87,10 @@ window.onload = async () => {
         offset += 0.75;
     }
 
+    shapes.push()
+
     /* --------- Attach event listener for events to the window --------- */
     window.addEventListener('keydown', function(action) {
-        console.log(action);
         checkKey(action.key);
     });
 
@@ -93,10 +110,22 @@ window.onload = async () => {
 /* --------- simple example of loading external files --------- */
 async function loadSomething() {
     const data = await fetch('shapes/bunny.obj').then(result => result.text());
-    let [parsedVertices, colors] = objectParser(data);
-    shapes[1] = createLoadedShape(parsedVertices, colors);
+    let bunny = [];
+    bunny = objectParser(data);
+    shapes[2] = createLoadedShape(bunny[0], bunny[1], bunny[2]);
+    shapes[2].translateLocally([-0.5, 0.5, -1]);
+    shapes[3] = createLoadedShape(bunny[0], bunny[1], bunny[2]);
+    shapes[3].translateLocally([0.5, 0.5, -1]);
+
+    const data2 = await fetch('shapes/teapot.obj').then(result => result.text());
+    let teapot = [];
+    teapot = objectParser(data2);
+    shapes[1] = createLoadedShape(teapot[0], teapot[1], teapot[2]);
     shapes[1].translateLocally([-1.5, 0.5, -1]);
+    shapes[4] = createLoadedShape(teapot[0], teapot[1], teapot[2]);
+    shapes[4].translateLocally([+1.5, 0.5, -1]);
 }
+
 
 let then = 0;
 
