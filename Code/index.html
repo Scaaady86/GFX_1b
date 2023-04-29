@@ -56,11 +56,48 @@
             vec3 lightVector = normalize(lightPosition.xyz - viewPosition.xyz);
             vec3 transformedNormal = normalize(normalMatrix * vertexNormal);
 
-            vec4 ambientLight = vertexColor * vec4(0.8, 0.8, 0.8, 1);
+            vec4 ambientLight = vertexColor * vec4(0.3, 0.3, 0.3, 1);
             float lightIntensity = max(0.0, dot(lightVector, transformedNormal));
 
             gl_Position = projectionMatrix * viewPosition;
-            fragmentColor = ambientLight * lightIntensity;
+            fragmentColor = ambientLight + (lightIntensity * vertexColor);
+            fragmentColor.a = 1.0; 
+        }
+    </script>
+
+    <script id="v-shader-gouraud-specular" type="x-shader/x-vertex">
+        precision mediump float;
+
+        attribute vec4 vertexPosition; 
+        attribute vec4 vertexColor; 
+        attribute vec3 vertexNormal;
+        attribute vec4 lightPosition;   
+
+        uniform mat4 modelViewMatrix;
+        uniform mat4 viewMatrix;
+        uniform mat4 projectionMatrix;
+        uniform mat3 normalMatrix;
+
+        varying vec4 fragmentColor;    
+
+        void main() {
+
+            vec4 lightPosition = viewMatrix * vec4(0.0, 10.0, 0.0, 1.0);
+            vec4 viewPosition =  modelViewMatrix * vertexPosition;
+
+            vec3 lightVector = normalize(lightPosition.xyz - viewPosition.xyz);
+            vec3 transformedNormal = normalize(normalMatrix * vertexNormal);
+
+            vec3 reflectVector = float(2) * dot(transformedNormal, lightVector) * transformedNormal - lightVector;
+
+            vec3 eyeVector = vec3(-viewPosition);
+
+            vec4 ambientLight = vertexColor * vec4(0.3, 0.3, 0.3, 1);
+            float lightIntensity = max(0.0, dot(lightVector, transformedNormal));
+            float specularLight = pow(max(0.0, dot(normalize(eyeVector), normalize(reflectVector))), 10.0);
+
+            gl_Position = projectionMatrix * viewPosition;
+            fragmentColor = ambientLight + (lightIntensity * vertexColor) + specularLight;
             fragmentColor.a = 1.0; 
         }
     </script>

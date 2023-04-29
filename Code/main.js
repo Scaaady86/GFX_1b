@@ -16,7 +16,7 @@ window.onload = async () => {
 
     shaderPrograms.defaultProgram = new ShaderProgram(shaders.default, shaders.fragment, shaderInfo);
     shaderPrograms.gouraudDiffuseProgram = new ShaderProgram(shaders.gouraudDiffuse, shaders.fragment, shaderInfo);
-    shaderPrograms.gouraudSpecularProgram = new ShaderProgram(shaders.gouraudDiffuse, shaders.fragment, shaderInfo);
+    shaderPrograms.gouraudSpecularProgram = new ShaderProgram(shaders.gouraudSpecular, shaders.fragment, shaderInfo);
     shaderPrograms.phongDiffuseProgram = new ShaderProgram(shaders.gouraudDiffuse, shaders.fragment, shaderInfo);
     shaderPrograms.phongSpecularProgram = new ShaderProgram(shaders.gouraudDiffuse, shaders.fragment, shaderInfo);
 
@@ -44,6 +44,11 @@ window.onload = async () => {
         objectCoordSystems[i].translateLocally([offset, -0.5, -1]);
         offset += 0.75;
     }
+
+    shapes.push(createLight());
+    objectCoordSystems.push(createOCS());
+    shapes[10].translateLocally([0, 1, 0]);
+    objectCoordSystems[10].translateLocally([0, 1, 0]);
 
     /* --------- Attach event listener for events to the window --------- */
     window.addEventListener('keydown', function(action) {

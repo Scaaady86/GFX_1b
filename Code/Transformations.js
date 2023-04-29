@@ -32,7 +32,7 @@ function MoveShapeLocally(key){
     if(selectedAll) {
         MoveShapeGlobally(key);
     }else{
-        for(i=1; i<10; i++) {
+        for(i=1; i<11; i++) {
             if(shapes[i].selected == true){
                 switch(key){
                     case 'ArrowUp':
@@ -66,7 +66,7 @@ function MoveShapeLocally(key){
 }
 
 function MoveShapeGlobally(key){
-    for(i=1; i<10; i++) {
+    for(i=1; i<11; i++) {
         if(shapes[i].selected == true){
             switch(key){
                 case 'ArrowUp':
@@ -99,7 +99,7 @@ function MoveShapeGlobally(key){
 }
 
 function rotateAllShapes(key){
-    for(i=1; i<10; i++) {
+    for(i=1; i<11; i++) {
         if(shapes[i].selected == true){
             switch(key){
                 case 'i':
@@ -135,7 +135,7 @@ function rotateShape(key){
     if(selectedAll){
         rotateAllShapes(key); 
     } else{
-        for(i=1; i<10; i++) {
+        for(i=1; i<11; i++) {
             if(shapes[i].selected == true){
                 switch(key){
                     case 'i':
@@ -172,7 +172,7 @@ function scaleShape(key){
     if(selectedAll){
         scaleAllShapes(key);
     }else{
-        for(i=1; i<10; i++) {
+        for(i=1; i<11; i++) {
             if(shapes[i].selected == true){
                 switch(key){
                     case 'a':
@@ -206,7 +206,7 @@ function scaleShape(key){
 }
 
 function scaleAllShapes(key){
-    for(i=1; i<10; i++) {
+    for(i=1; i<11; i++) {
         if(shapes[i].selected == true){
             switch(key){
                 case 'a':
@@ -264,4 +264,13 @@ function SelectCamera(){
         shape.selected = false;
     });
     cameraSelected = true;
+}
+
+function selectLight(){
+    cameraSelected = false;
+    selectedAll = false;
+    shapes.forEach(shape => {
+        shape.selected = false;
+    });
+    shapes[10].selected = true;
 }

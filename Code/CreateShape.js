@@ -242,3 +242,19 @@ function createLoadedShape(vertices, colors, normals){
 
     return loadedShape; 
 }
+
+function createLight() {
+    /* --------- define vertex positions & colors --------- */
+    /* -------------- 3 vertices per triangle ------------- */
+    const vertices = [];
+
+    const colors = [];
+
+    const normals = [];
+
+    /* --------- create shape object and initialize data --------- */
+    const light = new Shape();
+    light.initData(vertices, colors, normals);
+
+    return light;
+}

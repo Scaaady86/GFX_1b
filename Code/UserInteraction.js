@@ -113,5 +113,9 @@ function checkKey(key){
             shaderPrograms.phongSpecularProgram.enable();
             console.log("Phong Specular Shader enabled");
             break;
+        case 'L':
+            selectLight();
+            console.log("Phong Specular Shader enabled");
+            break;
     }
 }

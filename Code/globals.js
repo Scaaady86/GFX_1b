@@ -8,6 +8,7 @@ let gl = null;
 const shaders = {
     default: "v-shader-default",
     gouraudDiffuse: "v-shader-gouraud-diffuse",
+    gouraudSpecular: "v-shader-gouraud-specular",
     fragment: "f-shader"
 }
 
@@ -17,7 +18,8 @@ const shaderInfo = {
     attributes: {
         vertexLocation: "vertexPosition",
         colorLocation: "vertexColor",
-        normalLocation: "vertexNormal"
+        normalLocation: "vertexNormal",
+        lightLocation: "lightPosition"
     }, uniforms: {
         modelViewMatrix: "modelViewMatrix",
         projectionMatrix: "projectionMatrix",
