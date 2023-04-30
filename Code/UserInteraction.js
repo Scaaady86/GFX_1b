@@ -129,7 +129,8 @@ function checkKey(key){
             console.log("Phong Specular Shader enabled");
             break;
         case 'L':
-            selectLight();
+            if(lightSelected) SelectCamera();
+            else selectLight();
             console.log("Light selected");
             break;
     }
