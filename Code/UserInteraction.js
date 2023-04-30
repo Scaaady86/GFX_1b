@@ -37,18 +37,22 @@ function checkKey(key){
             break;
         case 'ArrowUp':
             if(cameraSelected)MoveCameraWithArrows(key);
+            else if(lightSelected) MoveLightWithArrows(key); 
             else MoveShapeLocally(key);
             break;
         case 'ArrowDown':
             if(cameraSelected)MoveCameraWithArrows(key);
+            else if(lightSelected) MoveLightWithArrows(key); 
             else MoveShapeLocally(key);
             break;
         case 'ArrowRight':
             if(cameraSelected)MoveCameraWithArrows(key);
+            else if(lightSelected) MoveLightWithArrows(key); 
             else MoveShapeLocally(key);
             break;
         case 'ArrowLeft':
             if(cameraSelected)MoveCameraWithArrows(key);
+            else if(lightSelected) MoveLightWithArrows(key); 
             else MoveShapeLocally(key);
             break;
         case ',':
@@ -58,21 +62,27 @@ function checkKey(key){
             MoveShapeLocally(key);
             break;
         case 'i':
+            if(lightSelected) rotateLight(key);
             rotateShape(key);
             break;
         case 'k':
+            if(lightSelected) rotateLight(key);
             rotateShape(key);
             break;
         case 'o':
+            if(lightSelected) rotateLight(key);
             rotateShape(key);
             break;
         case 'u':
+            if(lightSelected) rotateLight(key);
             rotateShape(key);
             break;
         case 'l':
+            if(lightSelected) rotateLight(key);
             rotateShape(key);
             break;
         case 'j':
+            if(lightSelected) rotateLight(key);
             rotateShape(key);
             break;
         case 'a':
@@ -95,27 +105,32 @@ function checkKey(key){
             break;
         case 'd':
             shaderPrograms.defaultProgram.enable();
+            gl.uniform4fv(currentShaderProgram.uniforms.lightLocation, globalLightPosition);
             console.log("Default Shader enabled");
             break;
         case 'w':
             shaderPrograms.gouraudDiffuseProgram.enable();
+            gl.uniform4fv(currentShaderProgram.uniforms.lightLocation, globalLightPosition);
             console.log("Gouraud Diffuse Shader enabled");
             break;
         case 'e':
             shaderPrograms.gouraudSpecularProgram.enable();
+            gl.uniform4fv(currentShaderProgram.uniforms.lightLocation, globalLightPosition);
             console.log("Gouraud Specular Shader enabled");
             break;
         case 'r':
             shaderPrograms.phongDiffuseProgram.enable();
+            gl.uniform4fv(currentShaderProgram.uniforms.lightLocation, globalLightPosition);
             console.log("Phong Diffuse Shader enabled");
             break;
         case 't':
             shaderPrograms.phongSpecularProgram.enable();
+            gl.uniform4fv(currentShaderProgram.uniforms.lightLocation, globalLightPosition);
             console.log("Phong Specular Shader enabled");
             break;
         case 'L':
             selectLight();
-            console.log("Phong Specular Shader enabled");
+            console.log("Light selected");
             break;
     }
 }

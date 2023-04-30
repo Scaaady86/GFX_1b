@@ -22,7 +22,6 @@ window.onload = async () => {
 
     shaderPrograms.defaultProgram.enable();
 
-    
     /* --------- create 9 shapes and corresponding OCS and translate them away from each other --------- */
     shapes.push(createWCS());
     objectCoordSystems.push(createWCS());
@@ -47,8 +46,8 @@ window.onload = async () => {
 
     shapes.push(createLight());
     objectCoordSystems.push(createOCS());
-    shapes[10].translateLocally([0, 10, 0]);
-    objectCoordSystems[10].translateLocally([0, 10, 0]);
+    shapes[10].translateLocally([0, 1, 0]);
+    objectCoordSystems[10].translateLocally([0, 1, 0]);
 
     /* --------- Attach event listener for events to the window --------- */
     window.addEventListener('keydown', function(action) {

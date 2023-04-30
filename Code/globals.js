@@ -44,3 +44,4 @@ const matrices = {
 var cameraSelected = true; //variable used to keep track of User selection
 var selectedAll = false; //variable used to keep track of User selection
 var lightSelected = false; //variable used to keep track of User selection
+var globalLightPosition = [0.0, 1.0, 0.0, 1.0];

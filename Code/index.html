@@ -77,12 +77,13 @@
         uniform mat4 viewMatrix;
         uniform mat4 projectionMatrix;
         uniform mat3 normalMatrix;
+        uniform vec4 lightLocation;
 
         varying vec4 fragmentColor;    
 
         void main() {
 
-            vec4 lightPosition = viewMatrix * vec4(0.0, 10.0, 0.0, 1.0);
+            vec4 lightPosition = viewMatrix * lightLocation;
             vec4 viewPosition =  modelViewMatrix * vertexPosition;
 
             vec3 lightVector = normalize(lightPosition.xyz - viewPosition.xyz);
@@ -143,13 +144,14 @@
         precision mediump float;
 
         uniform mat4 viewMatrix;
+        uniform vec4 lightLocation;
 
         varying vec3 transformedNormal;
         varying vec4 viewPosition; 
         varying vec4 vertColor;
         
         void main() {
-            vec4 lightPosition = viewMatrix * vec4(0.0, 10.0, 0.0, 1.0);
+            vec4 lightPosition = viewMatrix * lightLocation;
 
             vec3 lightVector = normalize(lightPosition.xyz - viewPosition.xyz);
 
@@ -167,13 +169,14 @@
         precision mediump float;
 
         uniform mat4 viewMatrix;
+        uniform vec4 lightLocation;
 
         varying vec3 transformedNormal;
         varying vec4 viewPosition; 
         varying vec4 vertColor;
         
         void main() {
-            vec4 lightPosition = viewMatrix * vec4(0.0, 10.0, 0.0, 1.0);
+            vec4 lightPosition = viewMatrix * lightLocation;
 
             vec3 lightVector = normalize(lightPosition.xyz - viewPosition.xyz);
 
