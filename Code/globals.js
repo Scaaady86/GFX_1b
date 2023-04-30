@@ -1,3 +1,5 @@
+// every global variable is stored here
+
 const { mat4, mat3 } = glMatrix;
 const toRad = glMatrix.glMatrix.toRadian;
 

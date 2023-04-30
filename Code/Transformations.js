@@ -414,7 +414,7 @@ function rotateLight(key){
 }
 
 function matrixVectorMul(matrix, vector) {
-    // This is a helper function that multiplies a 4x4 matrix and a 4D vector
+    // helper function to multiply a 4x4 matrix and a 4D vector
     const returnV = [];
     for (let i = 0; i < 4; i++) {
       returnV[i] = 0;
