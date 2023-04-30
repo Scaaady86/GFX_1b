@@ -6,10 +6,13 @@ const objectCoordSystems = [];
 let gl = null;
 
 const shaders = {
-    default: "v-shader-default",
-    gouraudDiffuse: "v-shader-gouraud-diffuse",
-    gouraudSpecular: "v-shader-gouraud-specular",
-    fragment: "f-shader"
+    vertexDefault: "v-shader-default",
+    vertexGouraudDiffuse: "v-shader-gouraud-diffuse",
+    vertexGouraudSpecular: "v-shader-gouraud-specular",
+    vertexPhong: "v-shader-phong",
+    fragmentDefault: "f-shader-default",
+    fragmentPhongDiffuse: "f-shader-phong-diffuse",
+    fragmentPhongSpecular: "f-shader-phong-specular"
 }
 
 let currentShaderProgram = null;
@@ -18,13 +21,13 @@ const shaderInfo = {
     attributes: {
         vertexLocation: "vertexPosition",
         colorLocation: "vertexColor",
-        normalLocation: "vertexNormal",
-        lightLocation: "lightPosition"
+        normalLocation: "vertexNormal"
     }, uniforms: {
         modelViewMatrix: "modelViewMatrix",
         projectionMatrix: "projectionMatrix",
         viewMatrix: "viewMatrix",
-        normalMatrix: "normalMatrix"
+        normalMatrix: "normalMatrix",
+        lightLocation: "lightLocation"
     }
 }
 
@@ -40,3 +43,4 @@ const matrices = {
 
 var cameraSelected = true; //variable used to keep track of User selection
 var selectedAll = false; //variable used to keep track of User selection
+var lightSelected = false; //variable used to keep track of User selection

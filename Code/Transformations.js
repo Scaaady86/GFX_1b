@@ -20,7 +20,7 @@ function MoveCameraWithArrows(key){
 
 function MoveCameraWithMouse(x, y, mousedown){
     window.addEventListener("mousemove", (action) =>{
-        if(mousedown) mat4.translate(matrices.viewMatrix, matrices.viewMatrix, [(x-action.offsetX)*0.0001, (y-action.offsetY)*-0.0001, 0]);
+        if(mousedown) mat4.translate(matrices.viewMatrix, matrices.viewMatrix, [(x-action.offsetX)*-0.0001, (y-action.offsetY)*0.0001, 0]);
     });
 
     window.addEventListener("mouseup", (action) =>{
@@ -273,4 +273,21 @@ function selectLight(){
         shape.selected = false;
     });
     shapes[10].selected = true;
+}
+
+function MoveLightWithArrows(key){
+    switch(key){
+        case 'ArrowUp':
+            mat4.translate(gl.uniform4fv(currentShaderProgram.uniforms.lightLocation, [0, 10, 0, 1]), gl.uniform4fv(currentShaderProgram.uniforms.lightLocation, [0, 10, 0, 1]), [0,-0.1,0]);
+            break;
+        case 'ArrowDown':
+            mat4.translate(matrices.viewMatrix, matrices.viewMatrix, [0,0.1,0]);
+            break;
+        case 'ArrowRight':
+            mat4.translate(matrices.viewMatrix, matrices.viewMatrix, [-0.1,0,0]);
+            break;
+        case 'ArrowLeft':
+            mat4.translate(matrices.viewMatrix, matrices.viewMatrix, [0.1,0,0]);
+            break;
+        }
 }

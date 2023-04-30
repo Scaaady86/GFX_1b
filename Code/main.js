@@ -14,15 +14,15 @@ window.onload = async () => {
     /* --------- create view matrix --------- */
     mat4.lookAt(matrices.viewMatrix, [0, 0, 3], [0, 0, 0], [0, 1, 0]);
 
-    shaderPrograms.defaultProgram = new ShaderProgram(shaders.default, shaders.fragment, shaderInfo);
-    shaderPrograms.gouraudDiffuseProgram = new ShaderProgram(shaders.gouraudDiffuse, shaders.fragment, shaderInfo);
-    shaderPrograms.gouraudSpecularProgram = new ShaderProgram(shaders.gouraudSpecular, shaders.fragment, shaderInfo);
-    shaderPrograms.phongDiffuseProgram = new ShaderProgram(shaders.gouraudDiffuse, shaders.fragment, shaderInfo);
-    shaderPrograms.phongSpecularProgram = new ShaderProgram(shaders.gouraudDiffuse, shaders.fragment, shaderInfo);
+    shaderPrograms.defaultProgram = new ShaderProgram(shaders.vertexDefault, shaders.fragmentDefault, shaderInfo);
+    shaderPrograms.gouraudDiffuseProgram = new ShaderProgram(shaders.vertexGouraudDiffuse, shaders.fragmentDefault, shaderInfo);
+    shaderPrograms.gouraudSpecularProgram = new ShaderProgram(shaders.vertexGouraudSpecular, shaders.fragmentDefault, shaderInfo);
+    shaderPrograms.phongDiffuseProgram = new ShaderProgram(shaders.vertexPhong, shaders.fragmentPhongDiffuse, shaderInfo);
+    shaderPrograms.phongSpecularProgram = new ShaderProgram(shaders.vertexPhong, shaders.fragmentPhongSpecular, shaderInfo);
 
     shaderPrograms.defaultProgram.enable();
 
-
+    
     /* --------- create 9 shapes and corresponding OCS and translate them away from each other --------- */
     shapes.push(createWCS());
     objectCoordSystems.push(createWCS());
@@ -47,8 +47,8 @@ window.onload = async () => {
 
     shapes.push(createLight());
     objectCoordSystems.push(createOCS());
-    shapes[10].translateLocally([0, 1, 0]);
-    objectCoordSystems[10].translateLocally([0, 1, 0]);
+    shapes[10].translateLocally([0, 10, 0]);
+    objectCoordSystems[10].translateLocally([0, 10, 0]);
 
     /* --------- Attach event listener for events to the window --------- */
     window.addEventListener('keydown', function(action) {
@@ -98,7 +98,7 @@ function render(now) {
 
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    
+
     shapes[0].drawLines();
     for(i = 1; i<shapes.length; i++){
 
